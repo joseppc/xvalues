@@ -146,7 +146,7 @@ static int get_value(const char *s, uint64_t *v)
 			*v *= data[EXI].multi;
 			break;
 		default:
-			fprintf(stderr, "Error in value %s:%d\n", s, ptr - s);
+			fprintf(stderr, "Error in value %s:%lu\n", s, ptr - s);
 			return -1;
 		}
 	}
@@ -182,7 +182,6 @@ static void print_all(int show_bin)
 int main(int argc, char *argv[])
 {
 	uint64_t v;
-	char *ptr;
 	enum multipliers width = 0;
 	int show_bin = 0;
 	int first = 1;
