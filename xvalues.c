@@ -12,7 +12,9 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- *   (c) 2018 Josep Puigdemont <josep.puigdemont@gmail.com>
+ *   (c) 2018-2020 Josep Puigdemont <josep.puigdemont@gmail.com>
+ *
+ *   SPDX-License-Identifier: GPL-3.0+
  */
 #include <stdio.h>
 #include <stdlib.h>
