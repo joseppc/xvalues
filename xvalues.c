@@ -12,7 +12,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- *   (c) 2018-2020 Josep Puigdemont <josep.puigdemont@gmail.com>
+ *   (c) 2018-2022 Josep Puigdemont <josep.puigdemont@gmail.com>
  *
  *   SPDX-License-Identifier: GPL-3.0+
  */
@@ -110,9 +110,36 @@ static void print_number(uint64_t v, enum multipliers width, int show_bin)
 	printf("\n");
 }
 
-static int get_value(const char *s, uint64_t *v)
+static int parse_binary(const char *const s, uint64_t *const v)
+{
+	uint64_t mask = 1;
+
+	if (strlen(s) > 66) {
+		fprintf(stderr, "Binary number too big, max 64 bits.\n");
+		return -1;
+	}
+
+	*v = 0;
+
+	for (int i = strlen(s) - 1; i > 1; i--) {
+		if (s[i] == '1') {
+			*v |= mask;
+		} else if (s[i] != '0') {
+			fprintf(stderr, "Binary numbers can only contain 0 or 1.\n");
+			return -1;
+		}
+		mask <<= 1;
+	}
+
+	return 0;
+}
+
+static int get_value(const char *const s, uint64_t *const v)
 {
 	char *ptr;
+
+	if (strlen(s) > 2 && s[0] == '0' && (s[1] == 'b' || s[1] == 'B'))
+		return parse_binary(s, v);
 
 	*v = strtoull(s, &ptr, 0);
 	if (*ptr != '\0') {
